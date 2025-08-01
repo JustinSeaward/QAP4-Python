@@ -28,7 +28,7 @@ CURR_DATE = datetime.datetime.now() # Current date.
 # Define program fucntions.
 
 # Main program starts here.
-    
+
 while True:
 
     os.system("cls" if os.name == "nt" else "clear") # Clears the screen when program is lanched.
@@ -37,7 +37,7 @@ while True:
     while True:
         # Input and validation(s) for customer first name.
         print()
-        CustFN = input("Enter the customers first name: ").title()
+        CustFN = "Rusty"#input("Enter the customers first name: ").title()
         if CustFN == "":
             print()
             print("   Data Entry Error - Customer first name cannot be blank.")
@@ -54,7 +54,7 @@ while True:
     while True:
         # Input and validation(s) for customer last name.
         print()
-        CustLN = input("Enter the customers last name: ").title()
+        CustLN = "Shakeford"#input("Enter the customers last name: ").title()
         if CustLN == "":
             print()
             print("    Data Entry Error - Customer last name cannot be blank.")
@@ -71,7 +71,7 @@ while True:
     while True:
         # Input and validation(s) for street address.
         print()
-        StAdd = input("Enter the street address: ")
+        StAdd = "128 school lane"#input("Enter the street address: ")
         if StAdd == "":
             print()
             print("    Data Entry Error - Street address cannot be blank.")
@@ -84,20 +84,20 @@ while True:
     while True:
         # Input and validation(s) for city.
         print()
-        City = input("Enter the city: ").title
+        City = "deep bite"#input("Enter the city: ").title
         if StAdd == "":
             print()
             print("    Data Entry Error - City cannot be blank.")
             print()
         else:
             break
-        
+    
         #print(City) # Test print.
 
     while True:
         # Input and validation(s) for the postal code.
         print()
-        PostalCode = input("Enter the postalcode (A9A9A9): ")
+        PostalCode = "A9A9A9"#input("Enter the postalcode (A9A9A9): ").upper
         if PostalCode == "":
             print()
             print("    Data Entry Error - Postalcode cannot be blank.")
@@ -111,7 +111,7 @@ while True:
         ###########
         # Not working from line 108 to 116.
         '''
-        elif PostalCode[0].isalpha == False or PostalCode[2].isalpha == False or PostalCode[4].isalpha == False:
+        elif PostalCode[0].isalpha != True or PostalCode[2].isalpha != True or PostalCode[4].isalpha != True:
             print()
             print("   Data Entry Error - Postalcode must conatin three letters and three numbers (A9A9A9).")
             print()
@@ -122,15 +122,13 @@ while True:
         ###########
         '''
     
-        
-        print(PostalCode) # Test print.
+        #print(PostalCode) # Test print.
 
     ProvLst = ["NL", "NS", "PEI", "NB", "QE", "ON", "MB", "SK", "AB", "BC", "NWT", "YT", "NT"] # Canadian province list to compare agaisnt user input.
 
     while True:
         # Input and validation for the province.
-        Prov = input("Enter the customer province (XX): ").upper()
-
+        Prov = "nl"#input("Enter the customer province (XX): ").upper()
         if Prov == "":
             print()
             print(" Data entry Error - The province cannot be blank.")
@@ -152,7 +150,7 @@ while True:
     # Input and validations for phone number.
         try:
             print()
-            PhoNum = input("Enter the phone number (9999999999): ")
+            PhoNum = "7094635555"#input("Enter the phone number (9999999999): ")
             if PhoNum == "":
                 print()
                 print("    Data Entry Error - Phone number cannot be blank.")
@@ -185,7 +183,7 @@ while True:
         else:
             break
 
-        print(NumCarsInsure) # Test print.
+        #print(NumCarsInsure) # Test print.
 
     while True:
         # Input and validation(s) for extra liability uo to #1,000,000.
@@ -202,7 +200,7 @@ while True:
         else:
             break
 
-        print(ExtLia) # Test print.
+        #print(ExtLia) # Test print.
        
     while True:
         # Input and validation(s) for glass coverage.
@@ -219,7 +217,7 @@ while True:
         else:
             break
 
-        print(GlassCover) # Test print.
+        #print(GlassCover) # Test print.
        
     while True:
         # Input and validation(s) for the optional loaner car coverage.
@@ -236,14 +234,14 @@ while True:
         else:
             break
 
-        print(LoanCar) # Test print.
+        #print(LoanCar) # Test print.
 
     PayMethodLst =["Full", "Monthly", "Downpay"]
-    DownPayAmt = 0
+    #DownPayAmt = 0
     while True:
         # Input and validation for the payment type.
         print()
-        PayMethod = input("Enter the payment method (Full, Monthly, Downpay): ").title()
+        PayMethod = "Full"#input("Enter the payment method (Full, Monthly, Downpay): ").title()
         if PayMethod == "":
             print()
             print(" Data entry error - The payment method cannot be blank.")
@@ -251,7 +249,7 @@ while True:
         elif PayMethod not in PayMethodLst:
             print()
             print("Data entry error - The payment method entered is invalid, must be Full, Monthly, or DownPay" )
-            print()    
+            print()
         else:
             if PayMethod == "Monthly" or PayMethod == "Downpay":
                 print()
@@ -259,10 +257,10 @@ while True:
                 DownPayAmt = float(DownPayAmt)
             else:
                 break
-        
-        print(PayMethod) # Test print.
-        print(DownPayAmt) # Test print.
-        
+    
+        #print(PayMethod) # Test print.
+        #print(DownPayAmt) # Test print.
+    
     while True:
         # Input and validation for the claim number.
         print()
@@ -286,7 +284,7 @@ while True:
         else:
             break
 
-        print(ClaimNum) # Test print.
+        #print(ClaimNum) # Test print.
 
     while True:
         # Input and validation for the claim date.
@@ -312,7 +310,7 @@ while True:
             else:    
                 break
         
-        print(ClaimDate) # Test print.
+        #print(ClaimDate) # Test print.
 
     while True:
         # Input and validation for the claim amount.
@@ -332,10 +330,9 @@ while True:
         else:
             break    
 
-        print(ClaimAmt) # Test print.
+        #print(ClaimAmt) # Test print.
 
-
-    # Define program calculations
+    # Define program calculations.
 
     # Calculation for insurance premium.
     if NumCarsInsure == 1:
@@ -344,16 +341,17 @@ while True:
         NumCarsInsure -= 1
         InsureCost = (BASIC_PREM_COST - (DIS_CAR_ESP * BASIC_PREM_COST)) * NumCarsInsure
         NumCarsInsure += 1
-        
+
     # Calculation for total extra cost.
-    # Option for extra liability
+
+    # Option for extra liability.
     if ExtLia == "Y":
         ExtLiaCost = EXT_LIA_COST * NumCarsInsure
         ExtLia == "Yes"
     else: 
         ExtLia == "N"
         ExtLiaCost = 0 
-        ExtLia = "No"
+        ExtLia = "No"  
 
     # Option for glass coverage.
     if  GlassCover == "Y":
@@ -363,30 +361,71 @@ while True:
         GlassCover == "N"
         GlassCoverCost = 0 
         GlassCover = "No"
-    
+
     # Option for loaner car.
     if LoanCar == "Y":
         LoanCarCost = LOANER_CAR_COST * NumCarsInsure
         LoanCar == "Yes"
     else: 
         LoanCar == "N"
-        LoanCarCost = 0 
+        LoanCarCost = 0
         LoanCar = "No"
-    
+
+    # Calculation for total extra cost.
     TotExtCosts = EXT_LIA_COST + GLASS_COST + LOANER_CAR_COST
 
-    # Calculation for total insurance premium:
+    # Calculation for total insurance premium.
     TotInsurPrem = InsureCost + TotExtCosts
 
-    # Calculation for total cost:
+    # Calculation for total cost.
     TotCost = TotInsurPrem * (HST_ESP + 1)
 
-    # If statement and calculation for 8 monthly payments with down payment and without down payment:
+    # If statement and calculations for 8 monthly payments with or without down payment.
     if PayMethod == "Downpay":
         MonPay = ((TotCost + PRO_FEE_COST) - DownPayAmt) / 8
     elif PayMethod == "Monthly":
         MonPay = (TotCost + PRO_FEE_COST) / 8
-    
+
+    # Format for customer name.
+    CustNameDsp = CustFN + CustLN    
+
+    # Format for phone number.
+    PhoNumDsp = "(" + PhoNum[0:3] + ")" + " " + PhoNum[3:6] + "-" + PhoNum[6:10]
+
+    # Format for postal code.
+    PostCodeDsp = PostalCode[0:2] + "-" + PostalCode[3:6]
+
+    # Format for insurance cost.
+    InsureCostDsp = FV.FDollar2(InsureCost)
+
+    # Format for extra liability cost.
+    ExtLiaCostDsp = FV.FDollar2(ExtLiaCost)  
+
+    # Format for glass coverage.
+    GlassCoverCostDsp = FV.FDollar2(GlassCoverCost)
+
+    # Format for loaner car cost.
+    LoanCarCostDsp = FV.FDollar2(LoanCarCost)
+
+    # Format for Total extra cost.
+    TotExtCostDsp = FV.FDollar2(TotExtCosts)
+
+    # Format for total insureance permium.
+    TotInsurPremDsp = FV.FDollar2(TotInsurPrem)
+
+    # Format for total cost.
+    TotCostDsp = FV.FDollar2(TotCost)
+
+    # Format For monthly pay.
+    MonPayDsp = FV.FDollar2(MonPay)
+
+    # Invoice date.
+    InvoiceDate = CURR_DATE
+
+    ### Display Receipt ###
+
+
+
 
     Wait = input("Press enter key to continue or enter End: ").title()
     if Wait == "End":
@@ -394,5 +433,4 @@ while True:
     if Wait == "":
         continue
 
-'''
 # Any housekeeping duties at the end of the program.
