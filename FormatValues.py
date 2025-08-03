@@ -3,6 +3,7 @@
 import datetime
 import sys
 
+
 def FDollar2(DollarValue):
     # Function will accept a value and format it to $#,###.##.
 
@@ -92,3 +93,27 @@ def ProgressBar(iteration, total, prefix='', suffix='', length=30, fill='█'):
     bar = fill * filled_length + '-' * (length - filled_length)
     sys.stdout.write(f'\r{prefix} |{bar}| {percent}% {suffix}')
     sys.stdout.flush()
+
+def FirstPayDate(CurrentDate):
+
+    CurrentDate = datetime.datetime.now()
+
+    Year = CurrentDate.year
+    Month = CurrentDate.month
+    Day = CurrentDate.day
+
+    PayYear = Year
+    PayMonth = Month + 1
+    PayDay = 1
+
+    if Day > 25:
+        PayMonth += 1
+    
+    if PayMonth > 12:
+        PayMonth -= 12
+        PayYear += 1
+
+    PayDate = datetime.datetime(PayYear, PayMonth, PayDay)
+    PayDateDsp = datetime.datetime.strftime(PayDate, '%d-%b-%y')
+
+    return PayDateDsp

@@ -85,7 +85,7 @@ while True:
         # Input and validation(s) for city.
         print()
         City = "deep bite"#input("Enter the city: ").title
-        if StAdd == "":
+        if City == "":
             print()
             print("    Data Entry Error - City cannot be blank.")
             print()
@@ -128,7 +128,7 @@ while True:
 
     while True:
         # Input and validation for the province.
-        Prov = "nl"#input("Enter the customer province (XX): ").upper()
+        Prov = "NL"#input("Enter the customer province (XX): ").upper()
         if Prov == "":
             print()
             print(" Data entry Error - The province cannot be blank.")
@@ -201,7 +201,7 @@ while True:
             break
 
         #print(ExtLia) # Test print.
-       
+    
     while True:
         # Input and validation(s) for glass coverage.
         print()
@@ -216,13 +216,13 @@ while True:
             print()
         else:
             break
-
+    
         #print(GlassCover) # Test print.
-       
+    
     while True:
         # Input and validation(s) for the optional loaner car coverage.
         print()
-        LoanCar= input("Would you like to add a loaner car (Y or N): ").upper() 
+        LoanCar= input("Would you like to add a loaner car (Y or N): ").upper()
         if LoanCar == "":
             print()
             print("    Data entry error - Loaner car cannot be blank.")
@@ -238,6 +238,7 @@ while True:
 
     PayMethodLst =["Full", "Monthly", "Downpay"]
     #DownPayAmt = 0
+    MonPay = 0
     while True:
         # Input and validation for the payment type.
         print()
@@ -250,20 +251,21 @@ while True:
             print()
             print("Data entry error - The payment method entered is invalid, must be Full, Monthly, or DownPay" )
             print()
+        elif PayMethod == "Monthly" or PayMethod == "Downpay":
+            print()
+            DownPayAmt = input("Enter the down payment amount: ")
+            DownPayAmt = float(DownPayAmt)
+            continue
         else:
-            if PayMethod == "Monthly" or PayMethod == "Downpay":
-                print()
-                DownPayAmt = input("Enter the down payment amount: ")
-                DownPayAmt = float(DownPayAmt)
-            else:
-                break
+            DownPayAmt = 0
+            break
+            
     
         #print(PayMethod) # Test print.
         #print(DownPayAmt) # Test print.
     
     while True:
         # Input and validation for the claim number.
-        print()
         try:
             ClaimNum = input("Enter the claim number: ")
             if ClaimNum == "":
@@ -301,14 +303,16 @@ while True:
                 print(" Data entry error - Claim date must be entered YYYY-MM-DD.")
                 print()
         else:
+            '''
             # Check that the date does not exceed the current date.
             if ClaimDate > CURR_DATE:
                 print() 
                 print(" Data entry error - Claim date can not exceed the current date.")
                 print()
                 continue
-            else:    
-                break
+            '''
+        #else:    
+            break
         
         #print(ClaimDate) # Test print.
 
@@ -348,18 +352,17 @@ while True:
     if ExtLia == "Y":
         ExtLiaCost = EXT_LIA_COST * NumCarsInsure
         ExtLia == "Yes"
-    else: 
-        ExtLia == "N"
-        ExtLiaCost = 0 
-        ExtLia = "No"  
-
+    elif ExtLia == "N":
+        ExtLiaCost = 0
+        ExtLia = "No" 
+        
     # Option for glass coverage.
     if  GlassCover == "Y":
         GlassCoverCost = GLASS_COST * NumCarsInsure
         GlassCover == "Yes"
     else: 
         GlassCover == "N"
-        GlassCoverCost = 0 
+        GlassCoverCost = 0
         GlassCover = "No"
 
     # Option for loaner car.
@@ -371,20 +374,31 @@ while True:
         LoanCarCost = 0
         LoanCar = "No"
 
+    # If statement and calculations for 8 monthly payments with or without down payment.
+    if PayMethod == "Downpay":
+        MonPay = ((TotCostHst + PRO_FEE_COST) - DownPayAmt) / 8
+    elif PayMethod == "Monthly":
+        MonPay = (TotCostHst + PRO_FEE_COST) / 8
+    #else:
+       # MonPay == "Full"
+
     # Calculation for total extra cost.
     TotExtCosts = EXT_LIA_COST + GLASS_COST + LOANER_CAR_COST
 
     # Calculation for total insurance premium.
     TotInsurPrem = InsureCost + TotExtCosts
 
-    # Calculation for total cost.
-    TotCost = TotInsurPrem * (HST_ESP + 1)
+    # Calculation for HST.
+    HST = TotInsurPrem * HST_ESP
 
-    # If statement and calculations for 8 monthly payments with or without down payment.
-    if PayMethod == "Downpay":
-        MonPay = ((TotCost + PRO_FEE_COST) - DownPayAmt) / 8
-    elif PayMethod == "Monthly":
-        MonPay = (TotCost + PRO_FEE_COST) / 8
+    # Calculation for total cost.
+    TotCostHst = TotInsurPrem * (HST_ESP + 1)
+
+    # Invoice date.
+    InvoiceDate = CURR_DATE
+
+    # Format for Invoice date.
+    InvoiceDateDsp = FV.FDateM(InvoiceDate)
 
     # Format for customer name.
     CustNameDsp = CustFN + CustLN    
@@ -394,6 +408,9 @@ while True:
 
     # Format for postal code.
     PostCodeDsp = PostalCode[0:2] + "-" + PostalCode[3:6]
+
+    # Format for city, province and postalcode.
+    CityProPostDsp = City + ", " + Prov + ", " + PostCodeDsp
 
     # Format for insurance cost.
     InsureCostDsp = FV.FDollar2(InsureCost)
@@ -407,24 +424,118 @@ while True:
     # Format for loaner car cost.
     LoanCarCostDsp = FV.FDollar2(LoanCarCost)
 
-    # Format for Total extra cost.
+    # Format for HST.
+    HSTDsp = FV.FDollar2(HST)
+
+    # Format for total extra cost.
     TotExtCostDsp = FV.FDollar2(TotExtCosts)
 
     # Format for total insureance permium.
     TotInsurPremDsp = FV.FDollar2(TotInsurPrem)
 
     # Format for total cost.
-    TotCostDsp = FV.FDollar2(TotCost)
+    TotCostHstDsp = FV.FDollar2(TotCostHst)
 
-    # Format For monthly pay.
-    MonPayDsp = FV.FDollar2(MonPay)
+    # Format for down payment.
+    DownPayAmtDsp = FV.FDollar2(DownPayAmt)
 
-    # Invoice date.
-    InvoiceDate = CURR_DATE
+    # Format for monthly pay.
+    MonPayDsp = FV.FDollar2(MonPay)#
+
+    # Format for claim amount.
+    ClaimAmtDsp = FV.FDollar2(ClaimAmt)
+
+    # Function for first pay date.
+    FirstPayDate = FV.FirstPayDate(CURR_DATE)
 
     ### Display Receipt ###
 
+    print(f" -------------------------------------------------------------------- ")
+    print(f" ---------               One Stop Insurance                 --------- ")
+    print(f" -------------------------------------------------------------------- ")
+    print()
+    print(f" Policy Number: {POL_NUM:<15d}      Invoice Date: {InvoiceDateDsp:>10s}")
+    print()
+    print(f" Customer: {CustNameDsp:<20s}      Phone Number: {PhoNumDsp:<13s}     ")
+    print(f" Address:  {StAdd:<20s}                                               ")
+    print(f"           {CityProPostDsp:<20s}   Cars on policy: {NumCarsInsure:<2d}")
+    print()
+    print(f" -------------------------------------------------------------------- ")
+    print(f"            Options              &                Cost                ")
+    print(f"                                                                      ")
+    print(f"                                  Insurance Premiums: {InsureCostDsp:>8s}")
+    print(f"                                                          ----------- ")
+    print(f" Extra Liability: {ExtLia:<3s}    Liability Cost:     {ExtLiaCostDsp:>8s}")
+    print(f" Glass Coverage:  {GlassCover:<3s}Glass Coverage:     {GlassCoverCostDsp:>8s}")
+    print(f" Loaner Car:      {LoanCar:<3s}   Loaner Car Cost:    {LoanCarCostDsp:>8s}")
+    print(f"                  -------------                           ----------- ")
+    print(f" Total Extra Cost: {TotExtCostDsp:<8s}          Total premium cost: {TotInsurPremDsp:<8s}")
+    print(f"                  -------------                           ----------- ")
+    print(f"                                  HST:                {HSTDsp:>8s}   ")
+    print(f"                                  Total Cost:         {TotCostHstDsp:>8s}")
+    print(f" Payment Method: {PayMethod:<7s}                          ----------- ")
+    print(f" Monthly Payment:{MonPayDsp:<8s}                                      ")
+    print(f" Down Payment:   {DownPayAmtDsp:<8s} First Payment Date: {FirstPayDate:<10s}")
+    print(f" -------------------------------------------------------------------- ")
+    print()
 
+    POL_NUM += 1
+
+    f = open("Policies.dat", "a") 
+ 
+    f.write(f"{str(CustNameDsp)},")
+    f.write(f"{str(StAdd)}, ")
+    f.write(f"{str(City)}, ")
+    f.write(f"{str(Prov)}, ")
+    f.write(f"{str(PostalCode)}, ")
+    f.write(f"{FV.FDateS(InvoiceDate)}, ")
+    f.write(f"{str(NumCarsInsure)}, ")
+    f.write(f"{str(InsureCost)},")
+    f.write(f"{str(ExtLiaCost)}, ")
+    f.write(f"{str(GlassCoverCost)}, ")
+    f.write(f"{str(LoanCarCost)},")
+    f.write(f"{str(TotExtCosts)},")
+    f.write(f"{str(TotInsurPrem)},")
+    f.write(f"{str(HST)},")
+    f.write(f"{str(TotCostHst)},")
+    f.write(f"{str(PayMethod)},")
+    f.write(f"{str(MonPay)},")
+    f.write(f"{str(DownPayAmt)},")
+    f.write(f"{str(FirstPayDate)},")
+    f.write(f"{str(ClaimNum)},")
+    f.write(f"{FV.FDateS(ClaimDate)},")
+    f.write(f"{str(ClaimAmt)}\n")
+    
+    f.close()
+
+    f = open("Policies.dat", "r")
+
+    for ClaimRecords in f:
+
+        ClaimLst = ClaimRecords.splitt(",")
+
+        ClaimNumR = ClaimLst[20].strip()
+        ClaimDateR = ClaimLst[21].strip()
+        ClaimAmtR = float(ClaimLst[22].strip())
+
+    print(f"       Claim Number          Claim Date           Amount              ")
+    print(f"   -----------------------------------------------------------        ")
+    print(f"         {ClaimNumR:<5d}            {ClaimDate}          {ClaimAmtR:<8}        ")
+
+    f.close()
+
+    f = open("Defaults.dat", "w")
+
+    f.write(f"{POL_NUM}\n")
+    f.write(f"{BASIC_PREM_COST}\n")
+    f.write(f"{DIS_CAR_ESP}\n")
+    f.write(f"{EXT_LIA_COST}\n")
+    f.write(f"{GLASS_COST}\n")
+    f.write(f"{LOANER_CAR_COST}\n")
+    f.write(f"{HST_ESP}\n")
+    f.write(f"{PRO_FEE_COST}\n")
+    
+    f.close()
 
 
     Wait = input("Press enter key to continue or enter End: ").title()
