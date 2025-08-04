@@ -1,12 +1,12 @@
-# Description: A program for the One Stop Insurance Company to enter and calculate new insurance policy information for its customers.
-# Authour: Justin Seaward
-# Date(s): July 29, 2025 - 
-
+# Description: A program for the One Stop Insurance Company to enter and calculate new insurance policy information for customers.
+# Authour: Justin Seaward.
+# Date(s): July 29th, 2025 - August 3rd, 2025.
 
 # Define program laibraries.
 import datetime
 import os
 import sys
+import time
 import FormatValues as FV
 
 # Define program constants.
@@ -37,7 +37,7 @@ while True:
     while True:
         # Input and validation(s) for customer first name.
         print()
-        CustFN = "Rusty"#input("Enter the customers first name: ").title()
+        CustFN = input("Enter the customers first name: ").title()
         if CustFN == "":
             print()
             print("   Data Entry Error - Customer first name cannot be blank.")
@@ -54,7 +54,7 @@ while True:
     while True:
         # Input and validation(s) for customer last name.
         print()
-        CustLN = "Shakeford"#input("Enter the customers last name: ").title()
+        CustLN = input("Enter the customers last name: ").title()
         if CustLN == "":
             print()
             print("    Data Entry Error - Customer last name cannot be blank.")
@@ -71,7 +71,7 @@ while True:
     while True:
         # Input and validation(s) for street address.
         print()
-        StAdd = "128 school lane"#input("Enter the street address: ")
+        StAdd = input("Enter the street address: ")
         if StAdd == "":
             print()
             print("    Data Entry Error - Street address cannot be blank.")
@@ -84,7 +84,7 @@ while True:
     while True:
         # Input and validation(s) for city.
         print()
-        City = "deep bite"#input("Enter the city: ").title
+        City = input("Enter the city: ").title()
         if City == "":
             print()
             print("    Data Entry Error - City cannot be blank.")
@@ -97,7 +97,7 @@ while True:
     while True:
         # Input and validation(s) for the postal code.
         print()
-        PostalCode = "A9A9A9"#input("Enter the postalcode (A9A9A9): ").upper
+        PostalCode = input("Enter the postalcode (A9A9A9): ").upper()
         if PostalCode == "":
             print()
             print("    Data Entry Error - Postalcode cannot be blank.")
@@ -106,29 +106,26 @@ while True:
             print()
             print("   Data Entry Error - Postalcode must be 6 characters.")
             print()    
-        else:
-            break
-        ###########
         # Not working from line 108 to 116.
-        '''
-        elif PostalCode[0].isalpha != True or PostalCode[2].isalpha != True or PostalCode[4].isalpha != True:
+        elif PostalCode[0].isalpha() == False or PostalCode[2].isalpha() == False or PostalCode[4].isalpha() == False:
             print()
             print("   Data Entry Error - Postalcode must conatin three letters and three numbers (A9A9A9).")
             print()
-        elif PostalCode[1].isdigit == False or PostalCode[3].isdigit == False or PostalCode[5].isdigit == False:
+        elif PostalCode[1].isdigit() == False or PostalCode[3].isdigit() == False or PostalCode[5].isdigit() == False:
             print()
             print("   Data Entry Error - Postalcode must conatin three letters and three numbers (A9A9A9).")
             print()
-        ###########
-        '''
-    
-        #print(PostalCode) # Test print.
+        else:
+            break    
+        
+        print(PostalCode) # Test print.
 
     ProvLst = ["NL", "NS", "PEI", "NB", "QE", "ON", "MB", "SK", "AB", "BC", "NWT", "YT", "NT"] # Canadian province list to compare agaisnt user input.
 
     while True:
         # Input and validation for the province.
-        Prov = "NL"#input("Enter the customer province (XX): ").upper()
+        print()
+        Prov = input("Enter the customer province (XX): ").upper()
         if Prov == "":
             print()
             print(" Data entry Error - The province cannot be blank.")
@@ -150,7 +147,7 @@ while True:
     # Input and validations for phone number.
         try:
             print()
-            PhoNum = "7094635555"#input("Enter the phone number (9999999999): ")
+            PhoNum = input("Enter the phone number (9999999999): ")
             if PhoNum == "":
                 print()
                 print("    Data Entry Error - Phone number cannot be blank.")
@@ -242,7 +239,7 @@ while True:
     while True:
         # Input and validation for the payment type.
         print()
-        PayMethod = "Full"#input("Enter the payment method (Full, Monthly, Downpay): ").title()
+        PayMethod = input("Enter the payment method (Full, Monthly, Downpay): ").title()
         if PayMethod == "":
             print()
             print(" Data entry error - The payment method cannot be blank.")
@@ -254,18 +251,168 @@ while True:
         elif PayMethod == "Monthly" or PayMethod == "Downpay":
             print()
             DownPayAmt = input("Enter the down payment amount: ")
-            DownPayAmt = float(DownPayAmt)
-            continue
+            if DownPayAmt == "":
+                print()
+                print(" Data entry error - The down payment cannot be blank.")
+                print()
+            elif DownPayAmt.isdigit() != True:
+                print()
+                print(f"     Data Entry Error - Down payment contains invalid characters")
+                print()
+            else:
+                break
         else:
             DownPayAmt = 0
             break
             
-    
         #print(PayMethod) # Test print.
         #print(DownPayAmt) # Test print.
+
+    ### Define program calculations. ###
+
+    # Function for insurance premium cost.
+
+    InsureCost = FV.InsurePrem(NumCarsInsure)
+
+    # Option for extra liability.
     
+    if ExtLia == "Y":
+        ExtLia = "Yes"
+        ExtLiaCost = EXT_LIA_COST * NumCarsInsure
+    else:
+         ExtLiaCost = 0
+         ExtLia = "No"
+
+    # Option for glass coverage.
+    if  GlassCover == "Y":
+        GlassCover = "Yes"
+        GlassCoverCost = GLASS_COST * NumCarsInsure
+    else:
+        GlassCoverCost = 0
+        GlassCover = "No"
+        
+    # Option for loaner car.
+    if LoanCar == "Y":
+        LoanCarCost = LOANER_CAR_COST * NumCarsInsure
+        LoanCar = "Yes"
+    else: 
+        LoanCarCost = 0
+        LoanCar = "No"
+
+    # Calculation for total extra cost.
+    TotExtCosts = ExtLiaCost + GlassCoverCost + LoanCarCost
+
+    # Calculation for total insurance premium.
+    TotInsurPrem = InsureCost + TotExtCosts
+
+    # Calculation for HST.
+    HST = TotInsurPrem * HST_ESP
+
+    # Calculation for total cost.
+    TotCostHst = TotInsurPrem * (HST_ESP + 1)
+
+     # If statement and calculations for 8 monthly payments with or without down payment.
+    DownPayAmt = float(DownPayAmt) 
+    if PayMethod == "Downpay" or PayMethod == "Monthly" and DownPayAmt >= 1:
+        MonPay = ((TotCostHst + PRO_FEE_COST) - DownPayAmt) / 8
+    elif PayMethod == "Monthly":
+        MonPay = (TotCostHst + PRO_FEE_COST) / 8
+    #else:
+       # MonPay == "Full"
+
+    # Invoice date.
+    InvoiceDate = CURR_DATE
+
+    ### Define program formats. ###
+
+    # Format for Invoice date.
+    InvoiceDateDsp = FV.FDateS(InvoiceDate)
+
+    # Format for customer name.
+    CustNameDsp = CustFN + " " + CustLN    
+
+    # Format for phone number.
+    PhoNumDsp = "(" + PhoNum[0:3] + ")" + " " + PhoNum[3:6] + "-" + PhoNum[6:10]
+
+    # Format for postal code.
+    PostCodeDsp = PostalCode[0:3] + "-" + PostalCode[3:6]
+
+    # Format for city, province and postalcode.
+    CityProPostDsp = City + ", " + Prov + ", " + PostCodeDsp
+
+    # Format for insurance cost.
+    InsureCostDsp = FV.FDollar2(InsureCost)
+
+    # Format for extra liability cost.
+    ExtLiaCostDsp = FV.FDollar2(ExtLiaCost)
+
+    # Format for glass coverage.
+    GlassCoverCostDsp = FV.FDollar2(GlassCoverCost)
+
+    # Format for loaner car cost.
+    LoanCarCostDsp = FV.FDollar2(LoanCarCost)
+
+    # Format for HST.
+    HSTDsp = FV.FDollar2(HST)
+
+    # Format for total extra cost.
+    TotExtCostDsp = FV.FDollar2(TotExtCosts)
+
+    # Format for total insureance permium.
+    TotInsurPremDsp = FV.FDollar2(TotInsurPrem)
+
+    # Format for total cost.
+    TotCostHstDsp = FV.FDollar2(TotCostHst)
+
+    # Format for down payment.
+    DownPayAmtDsp = FV.FDollar2(DownPayAmt)
+
+    # Format for monthly pay.
+    MonPayDsp = FV.FDollar2(MonPay)
+
+    # Function for first pay date.
+    FirstPayDate = FV.FirstPayDate(CURR_DATE)
+
+    ### Display Receipt ###
+
+    print()
+    print(f" --------------------------------------------------------------------- ")
+    print(f" ---------                One Stop Insurance                 --------- ")
+    print(f" --------------------------------------------------------------------- ")
+    print()
+    print(f"  Policy Number: {POL_NUM:<15d}      Invoice Date:   {InvoiceDateDsp:>10s}")
+    print()
+    print()
+    print(f"  Customer: {CustNameDsp:<20s}      Phone Number: {PhoNumDsp:<13s}     ")
+    print()
+    print(f"  Address:  {StAdd:<15s}                   Cars on policy:             ")
+    print(f"            {CityProPostDsp:<20s}                  {NumCarsInsure:<2d} ")
+    print()
+    print(f" ----------------------------------------------------------------------")
+    print(f"             Options              &                Cost                ")
+    print(f"            ---------             |               ------                ")
+    print(f"                                  |  Insurance Premiums:     {InsureCostDsp:>8s}")
+    print(f"                                  |                         ----------- ")
+    print(f"  Extra Liability:   {ExtLia:<3s}          |  Liability Cost:          {ExtLiaCostDsp:>8s}")
+    print(f"  Glass Coverage:    {GlassCover:<3s}          |  Glass Coverage:          {GlassCoverCostDsp:>8s}")
+    print(f"  Loaner Car:        {LoanCar:<3s}          |  Loaner Car Cost:         {LoanCarCostDsp:>8s}")
+    print(f"                    ---------     |                         ----------- ")
+    print(f"                                  |                                     ")
+    print(f"  Payment Method:    {PayMethod:<7s}      |  Total Extra Cost:         {TotExtCostDsp:<8s}")
+    print(f"                                  |  Total premium cost:     {TotInsurPremDsp:>8s}")
+    print(f"  Down Payment:      {DownPayAmtDsp:<8s}     |                         ----------- ")
+    print(f"                                  |  HST:                     {HSTDsp:>8s}")
+    print(f"  Monthly Payment:   {MonPayDsp:<8s}     |  Total Cost:             {TotCostHstDsp:>8s}")
+    print(f"                    ---------     |                         ----------- ")
+    print(f"                                  |                                     ")
+    print(f"                                  |  First Payment Date:    {FirstPayDate:>10s}")
+    print(f" ---------------------------------------------------------------------- ")
+    print()
+
+    # Start of inputs for the claim number, calim date and claim amount.
     while True:
         # Input and validation for the claim number.
+        print()
         try:
             ClaimNum = input("Enter the claim number: ")
             if ClaimNum == "":
@@ -296,23 +443,21 @@ while True:
             ClaimDate = datetime.datetime.strptime(ClaimDate, "%Y-%m-%d")
             if ClaimDate == "":
                 print()
-                print(" Data entry error - Claim datew cannot be blank.")
+                print(" Data entry error - Claim date cannot be blank.")
                 print()
         except ValueError:
                 print()
                 print(" Data entry error - Claim date must be entered YYYY-MM-DD.")
                 print()
         else:
-            '''
             # Check that the date does not exceed the current date.
             if ClaimDate > CURR_DATE:
                 print() 
                 print(" Data entry error - Claim date can not exceed the current date.")
                 print()
                 continue
-            '''
-        #else:    
-            break
+            else:
+                break
         
         #print(ClaimDate) # Test print.
 
@@ -332,197 +477,69 @@ while True:
                 print(" Data entry error - The claim amount contains invalid characters.")
                 print()
         else:
-            break    
+            break
 
-        #print(ClaimAmt) # Test print.
-
-    # Define program calculations.
-
-    # Calculation for insurance premium.
-    if NumCarsInsure == 1:
-        InsureCost = BASIC_PREM_COST
-    elif NumCarsInsure > 1:
-        NumCarsInsure -= 1
-        InsureCost = (BASIC_PREM_COST - (DIS_CAR_ESP * BASIC_PREM_COST)) * NumCarsInsure
-        NumCarsInsure += 1
-
-    # Calculation for total extra cost.
-
-    # Option for extra liability.
-    if ExtLia == "Y":
-        ExtLiaCost = EXT_LIA_COST * NumCarsInsure
-        ExtLia == "Yes"
-    elif ExtLia == "N":
-        ExtLiaCost = 0
-        ExtLia = "No" 
-        
-    # Option for glass coverage.
-    if  GlassCover == "Y":
-        GlassCoverCost = GLASS_COST * NumCarsInsure
-        GlassCover == "Yes"
-    else: 
-        GlassCover == "N"
-        GlassCoverCost = 0
-        GlassCover = "No"
-
-    # Option for loaner car.
-    if LoanCar == "Y":
-        LoanCarCost = LOANER_CAR_COST * NumCarsInsure
-        LoanCar == "Yes"
-    else: 
-        LoanCar == "N"
-        LoanCarCost = 0
-        LoanCar = "No"
-
-    # If statement and calculations for 8 monthly payments with or without down payment.
-    if PayMethod == "Downpay":
-        MonPay = ((TotCostHst + PRO_FEE_COST) - DownPayAmt) / 8
-    elif PayMethod == "Monthly":
-        MonPay = (TotCostHst + PRO_FEE_COST) / 8
-    #else:
-       # MonPay == "Full"
-
-    # Calculation for total extra cost.
-    TotExtCosts = EXT_LIA_COST + GLASS_COST + LOANER_CAR_COST
-
-    # Calculation for total insurance premium.
-    TotInsurPrem = InsureCost + TotExtCosts
-
-    # Calculation for HST.
-    HST = TotInsurPrem * HST_ESP
-
-    # Calculation for total cost.
-    TotCostHst = TotInsurPrem * (HST_ESP + 1)
-
-    # Invoice date.
-    InvoiceDate = CURR_DATE
-
-    # Format for Invoice date.
-    InvoiceDateDsp = FV.FDateM(InvoiceDate)
-
-    # Format for customer name.
-    CustNameDsp = CustFN + CustLN    
-
-    # Format for phone number.
-    PhoNumDsp = "(" + PhoNum[0:3] + ")" + " " + PhoNum[3:6] + "-" + PhoNum[6:10]
-
-    # Format for postal code.
-    PostCodeDsp = PostalCode[0:2] + "-" + PostalCode[3:6]
-
-    # Format for city, province and postalcode.
-    CityProPostDsp = City + ", " + Prov + ", " + PostCodeDsp
-
-    # Format for insurance cost.
-    InsureCostDsp = FV.FDollar2(InsureCost)
-
-    # Format for extra liability cost.
-    ExtLiaCostDsp = FV.FDollar2(ExtLiaCost)  
-
-    # Format for glass coverage.
-    GlassCoverCostDsp = FV.FDollar2(GlassCoverCost)
-
-    # Format for loaner car cost.
-    LoanCarCostDsp = FV.FDollar2(LoanCarCost)
-
-    # Format for HST.
-    HSTDsp = FV.FDollar2(HST)
-
-    # Format for total extra cost.
-    TotExtCostDsp = FV.FDollar2(TotExtCosts)
-
-    # Format for total insureance permium.
-    TotInsurPremDsp = FV.FDollar2(TotInsurPrem)
-
-    # Format for total cost.
-    TotCostHstDsp = FV.FDollar2(TotCostHst)
-
-    # Format for down payment.
-    DownPayAmtDsp = FV.FDollar2(DownPayAmt)
-
-    # Format for monthly pay.
-    MonPayDsp = FV.FDollar2(MonPay)#
-
-    # Format for claim amount.
-    ClaimAmtDsp = FV.FDollar2(ClaimAmt)
-
-    # Function for first pay date.
-    FirstPayDate = FV.FirstPayDate(CURR_DATE)
-
-    ### Display Receipt ###
-
-    print(f" -------------------------------------------------------------------- ")
-    print(f" ---------               One Stop Insurance                 --------- ")
-    print(f" -------------------------------------------------------------------- ")
-    print()
-    print(f" Policy Number: {POL_NUM:<15d}      Invoice Date: {InvoiceDateDsp:>10s}")
-    print()
-    print(f" Customer: {CustNameDsp:<20s}      Phone Number: {PhoNumDsp:<13s}     ")
-    print(f" Address:  {StAdd:<20s}                                               ")
-    print(f"           {CityProPostDsp:<20s}   Cars on policy: {NumCarsInsure:<2d}")
-    print()
-    print(f" -------------------------------------------------------------------- ")
-    print(f"            Options              &                Cost                ")
-    print(f"                                                                      ")
-    print(f"                                  Insurance Premiums: {InsureCostDsp:>8s}")
-    print(f"                                                          ----------- ")
-    print(f" Extra Liability: {ExtLia:<3s}    Liability Cost:     {ExtLiaCostDsp:>8s}")
-    print(f" Glass Coverage:  {GlassCover:<3s}Glass Coverage:     {GlassCoverCostDsp:>8s}")
-    print(f" Loaner Car:      {LoanCar:<3s}   Loaner Car Cost:    {LoanCarCostDsp:>8s}")
-    print(f"                  -------------                           ----------- ")
-    print(f" Total Extra Cost: {TotExtCostDsp:<8s}          Total premium cost: {TotInsurPremDsp:<8s}")
-    print(f"                  -------------                           ----------- ")
-    print(f"                                  HST:                {HSTDsp:>8s}   ")
-    print(f"                                  Total Cost:         {TotCostHstDsp:>8s}")
-    print(f" Payment Method: {PayMethod:<7s}                          ----------- ")
-    print(f" Monthly Payment:{MonPayDsp:<8s}                                      ")
-    print(f" Down Payment:   {DownPayAmtDsp:<8s} First Payment Date: {FirstPayDate:<10s}")
-    print(f" -------------------------------------------------------------------- ")
-    print()
-
-    POL_NUM += 1
+        #print(ClaimDate) # Test print.
 
     f = open("Policies.dat", "a") 
  
-    f.write(f"{str(CustNameDsp)},")
+    f.write(f"{str(CustNameDsp)}, ")
     f.write(f"{str(StAdd)}, ")
     f.write(f"{str(City)}, ")
     f.write(f"{str(Prov)}, ")
     f.write(f"{str(PostalCode)}, ")
     f.write(f"{FV.FDateS(InvoiceDate)}, ")
     f.write(f"{str(NumCarsInsure)}, ")
-    f.write(f"{str(InsureCost)},")
+    f.write(f"{str(InsureCost)}, ")
     f.write(f"{str(ExtLiaCost)}, ")
     f.write(f"{str(GlassCoverCost)}, ")
-    f.write(f"{str(LoanCarCost)},")
-    f.write(f"{str(TotExtCosts)},")
-    f.write(f"{str(TotInsurPrem)},")
-    f.write(f"{str(HST)},")
-    f.write(f"{str(TotCostHst)},")
-    f.write(f"{str(PayMethod)},")
-    f.write(f"{str(MonPay)},")
-    f.write(f"{str(DownPayAmt)},")
-    f.write(f"{str(FirstPayDate)},")
-    f.write(f"{str(ClaimNum)},")
-    f.write(f"{FV.FDateS(ClaimDate)},")
+    f.write(f"{str(LoanCarCost)}, ")
+    f.write(f"{str(TotExtCosts)}, ")
+    f.write(f"{str(TotInsurPrem)}, ")
+    f.write(f"{FV.FComma2(HST)}, ")
+    f.write(f"{FV.FComma2(TotCostHst)}, ")
+    f.write(f"{str(PayMethod)}, ")
+    f.write(f"{FV.FComma2(MonPay)}, ")
+    f.write(f"{FV.FComma2(DownPayAmt)}, ")
+    f.write(f"{str(FirstPayDate)}, ")
+    f.write(f"{str(ClaimNum)}, ")
+    f.write(f"{FV.FDateS(ClaimDate)}, ")
     f.write(f"{str(ClaimAmt)}\n")
     
     f.close()
 
     f = open("Policies.dat", "r")
 
-    for ClaimRecords in f:
-
-        ClaimLst = ClaimRecords.splitt(",")
-
-        ClaimNumR = ClaimLst[20].strip()
-        ClaimDateR = ClaimLst[21].strip()
-        ClaimAmtR = float(ClaimLst[22].strip())
-
+    print()
     print(f"       Claim Number          Claim Date           Amount              ")
     print(f"   -----------------------------------------------------------        ")
-    print(f"         {ClaimNumR:<5d}            {ClaimDate}          {ClaimAmtR:<8}        ")
 
+    for ClaimRecords in f:
+
+        ClaimLst = ClaimRecords.split(",")
+        ClaimNumLst = []
+        ClaimDateLst = []
+        ClaimAmtLst = []
+
+        ClaimNumLst = ClaimLst[20].strip()
+        ClaimDateLst = ClaimLst[21].strip()
+        ClaimAmtLst = ClaimLst[22].strip()
+
+        print(f"         {ClaimNumLst:<5s}               {ClaimDateLst:<12s}        ${ClaimAmtLst:<9s}")
+    
     f.close()
+
+    print()
+    Message = "Saving Claim Data for Policy Number... " + str(POL_NUM)
+    for _ in range(5):  # Change to control no. of 'blinks'
+        print(Message, end='\r')
+        time.sleep(.3)  # To create the blinking effect
+        sys.stdout.write('\033[2K\r')  # Clears the entire line and carriage returns.
+        time.sleep(1)
+    print(f"Policy number {POL_NUM} Saved!")
+    print()
+
+    POL_NUM += 1
 
     f = open("Defaults.dat", "w")
 
@@ -534,14 +551,13 @@ while True:
     f.write(f"{LOANER_CAR_COST}\n")
     f.write(f"{HST_ESP}\n")
     f.write(f"{PRO_FEE_COST}\n")
-    
+
     f.close()
 
-
+    print()
     Wait = input("Press enter key to continue or enter End: ").title()
     if Wait == "End":
         break
     if Wait == "":
         continue
-
-# Any housekeeping duties at the end of the program.
+    print()

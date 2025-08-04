@@ -3,6 +3,10 @@
 import datetime
 import sys
 
+# Define program constants.
+EXT_LIA_COST = 130 # Extra liability cost $130.00
+BASIC_PREM_COST = 869.00 # Basic premium cost $869.00.
+DIS_CAR_ESP = 0.25 # 25% discount rate for additional cars.
 
 def FDollar2(DollarValue):
     # Function will accept a value and format it to $#,###.##.
@@ -117,3 +121,16 @@ def FirstPayDate(CurrentDate):
     PayDateDsp = datetime.datetime.strftime(PayDate, '%d-%b-%y')
 
     return PayDateDsp
+
+# Function for insurance premium cost.
+
+def InsurePrem(NumCarsInsure):
+
+    if NumCarsInsure == 1:
+        InsureCost = BASIC_PREM_COST
+    elif NumCarsInsure > 1:
+        NumCarsInsure -= 1
+        InsureCost = BASIC_PREM_COST + (BASIC_PREM_COST - (DIS_CAR_ESP * BASIC_PREM_COST)) * NumCarsInsure
+        NumCarsInsure += 1
+
+    return InsureCost
